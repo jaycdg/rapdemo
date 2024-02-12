@@ -1,0 +1,43 @@
+managed implementation in class ZBP_MARA_TM unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZR_MARA_TM alias material
+persistent table zmara_tm
+draft table ZMARA_TM_D
+etag master LocalLastChanged
+lock master total etag LastChaged
+authorization master( global )
+
+{
+  field ( mandatory : create )
+   Matnr;
+
+  field ( readonly )
+   LastChaged,
+   LocalLastChanged;
+
+  field ( readonly : update )
+   Matnr;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for ZMARA_TM
+  {
+    Matnr = matnr;
+    Mtart = mtart;
+    MatDesc = mat_desc;
+    Uom = uom;
+    LocalLastChanged = local_last_changed;
+    LastChaged = last_chaged;
+  }
+}
